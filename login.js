@@ -21,12 +21,10 @@ function criarUsuario() {
         if (resposta.data) {
             localStorage.setItem('userLogged', resposta.data.id);
             console.log(resposta.data);
-            location.href = 'recados.html';
-        } else {
-            console.log(erro.response.data.msg);
+            location.href = 'note.html';
+        } else {            
             abrirModal('Atenção!', erro.response.data.error, 'Fechar', null);            
-        }}).catch((erro) => {
-            console.log(erro.response.data.msg);
+        }}).catch((erro) => {            
             abrirModal('Atenção!', erro.response.data.error, 'Fechar', null);            
         });
 }
@@ -34,16 +32,17 @@ function criarUsuario() {
 function login() {
     const usuarioL = document.getElementById('user').value;
     const senhaL = document.getElementById('password').value;    
-    axios.post(`${api}/login`, {
+    axios.post(`${api}/users/login`, {
         username: usuarioL, password: senhaL
     }).then((resposta) => {
-        if (resposta.data) {
+        console.log('respostaa', resposta.data);
+        if (resposta.data.id) {
             localStorage.setItem('userLogged', resposta.data.id);
-            location.href = 'recados.html';
+            location.href = 'note.html';
         } else {
-            alert(resposta.data.message);
+            abrirModal('Atenção!', erro.response.data.error, 'Fechar', null);
         }}).catch((erro) => {
-            abrirModal('Atenção!', erro.response.data.msg, 'Fechar', null);            
+            abrirModal('Atenção!', erro.response.data.error, 'Fechar', null);            
         });
 }
 
